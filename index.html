@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Custom Blocks in WordPress - Step by Step Guide</title>
+    <meta name="description" content="A step by step guide to create custom blocks for WordPress.">
+    <link rel="icon" type="image/png" href="/images/icon.png" sizes="any">
+    <link rel="canonical" href="https://customblocks.info/"/>
+    <meta property="og:title" content="Create Custom Blocks in WordPress - Step by Step Guide">
+    <meta property="og:description" content="A step by step guide to create custom blocks for WordPress.">
+    <meta property="og:image" content="https://customblocks.info/images/custom-blocks.jpg">
+    <meta property="og:url" content="https://customblocks.info/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Custom Blocks">
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-size: 18px;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        header, main {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header, footer {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 960px) {
+            main {
+                grid-template-columns: 1fr 3fr;
+            }
+        }
+
+        h1 {
+            font-size: 35px;
+        }
+
+        h2 {
+            font-size: 30px;
+        }
+
+        h3 {
+            font-size: 25px;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        a, a:visited {
+            color: #2690F6;
+        }
+
+        a:hover {
+            color: orange;
+        }
+
+        figure, img {
+            width: 100%;
+            height: auto;
+            margin: 0;
+        }
+
+        img {
+            border-radius: 5px;
+        }
+
+        pre {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        nav {
+            position: sticky;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NYNP0N3497"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-NYNP0N3497');
+    </script>
+</head>
+<body>
+<header>
+    <h1>Create Custom Blocks in WordPress</h1>
+    <h2>Step by Step Guide</h2>
+    <time datetime="2023-10-06">Last update: October 6th, 2023</time>
+</header>
+<main>
+    <aside>
+        <nav>
+            <a href="#introduction">Introduction</a>
+            <a href="#environment">Step 1: Local environment</a>
+            <a href="#create">Step 2: Use create-block</a>
+            <a href="#customize">Step 3: Customize it</a>
+        </nav>
+    </aside>
+    <article>
+        <section id="introduction">
+            <h3>Introduction</h3>
+            <figure>
+                <img src="./images/custom-blocks.jpg" alt="WordPress blocks" width="1280" height="853">
+            </figure>
+            <p>The way to create a WordPress block has changed a couple of times since they started existing. That's
+                normal
+                because WordPress is a natural project that grows organically. Everything changes. But don't worry. Here
+                is a step by step, updated guide.</p>
+        </section>
+        <section id="environment">
+            <h3>Step 1: Have a local environment with node installed</h3>
+            <p>If you are going to develop a block, chances are you know your way around, and just want the steps to
+                create a block, but <strong>already have a local environment set up and know what node and npm
+                    is</strong>.</p>
+            <p>If you do, go to the next step.</p>
+            <p>If you don't, just keep reading.</p>
+            <h4>Local WordPress environment</h4>
+            <p>Don't panic. This isn't anything crazy. The point is... you need the tools to run WordPress on the
+                machine you are using to develop your block. I guess that makes sense. If you can't run WordPress, you
+                can't look at the block you are creating.</p>
+            <p>All you need is to install Docker and Node.</p>
+            <ul>
+                <li>Docker: Install on <a href="https://docs.docker.com/desktop/install/windows-install/"
+                                          target="_blank">Windows</a>, <a
+                        href="https://docs.docker.com/desktop/install/linux-install/" target="_blank">Linux</a> or <a
+                        href="https://docs.docker.com/desktop/install/mac-install/" target="_blank">macOS</a> .
+                </li>
+                <li>Node: <a href="https://nodejs.org/en" target="_blank">Install Node</a>.</li>
+            </ul>
+            <p>Once this is done, just open a terminal. A terminal is a way to talk to your computer with commands. You
+                can open a terminal as follows:</p>
+            <ul>
+                <li>Windows: Ctrl + Alt + T</li>
+                <li>macOS: Cmd + Space, then type "terminal"</li>
+                <li>Linux: You already know ;)</li>
+            </ul>
+            <p>Once it's open, you will see a window where you can type in a text. That's where you can write or
+                copy/paste the following command (a command is an instruction for your computer):</p>
+            <pre>npm -g i @wordpress/env</pre>
+            <p>This basically means: "Hey, please install the package from npm called <i>@wordpress/env</i>".</p>
+            <figure>
+                <img src="./images/install-wp-env-command.png" alt="Install wp-env command" width="791" height="536">
+            </figure>
+            <p>Hit intro and let it work. Once that's done, you should see something like this or very similar: </p>
+            <figure>
+                <img src="./images/wp-installed.png" alt="Installed wp-env command" width="791" height="536">
+            </figure>
+            <p>Great news, now you can start your local environment by running:</p>
+            <pre>wp-env start</pre>
+            <p>You should now see something as follows:</p>
+            <figure>
+                <img src="./images/wp-env-start.png" alt="Start WP Env" width="791" height="536">
+            </figure>
+            <p>There are two instances... just open the first link, and you should see your WordPress installation up
+                and running!</p>
+            <p>You can now access the admin area by appending /wp-admin to the URL. The default credentials are:</p>
+            <ul>
+                <li>Username: admin</li>
+                <li>Password: password</li>
+            </ul>
+            <p>So yeah, that's what you need to type in to login into the admin area:</p>
+            <figure>
+                <img src="./images/access-admin-area.png" alt="Access admin area" width="484" height="455">
+            </figure>
+            <p>Good to go!, you have your local WordPress environment set up. Now you can start coding plugins, themes,
+                blocks, and even add cool new stuff and contribute to the community!</p>
+        </section>
+        <section id="create">
+            <h3>Step 2: Use the create-block tool</h3>
+            <p>The <a href="https://www.npmjs.com/package/@wordpress/create-block" target="_blank">create-block</a> tool
+                is an official npm package used to create WordPress blocks.</p>
+            <p>To use it just run:</p>
+            <pre>npx @wordpress/create-block@latest my-custom-block</pre>
+            <p>Of course, you can change <i>"my-custom-block"</i> to whatever you like. This is the name of your new
+                block.</p>
+            <p>If you never installed the create-block package before, it will ask you to install it. But the cool thing
+                about using npx is that it will clean everything up after using it. Also, note that using <i>@latest</i>,
+                ensures we will use the most up-to-date version.</p>
+            <figure>
+                <img src="./images/npx-create-block-command.png" alt="NPX Command" width="1059" height="199"
+                     loading="lazy">
+            </figure>
+            <p>Just enjoy the process while it runs.</p>
+            <p>What this command does is:</p>
+            <ul>
+                <li>It creates a WordPress plugin for you</li>
+                <li>That plugin already contains the base for the new block</li>
+            </ul>
+            <p>Once completed, it should say: <i>"Done: WordPress plugin My Custom Block bootstrapped in the
+                my-custom-block directory"</i>. And also give you a bunch of example commands, like:</p>
+            <ul>
+                <li><strong>npm start</strong>: Starts the build for development.</li>
+                <li><strong>npm run build</strong>: Builds the code for production.</li>
+            </ul>
+            <p>And some others... but yeah for now, what you should do is look at the plugin that has been created
+                for you, which is inside the WordPress plugins folder and has a structure as follows:</p>
+            <p>You already created a custom block plugin, and can now go to your admin area to activate it.</p>
+            <figure>
+                <img src="./images/block-plugin-example.png" alt="Block Plugin Example" width="792" height="156"
+                     loading="lazy">
+            </figure>
+            <p>Once activated, your block is now available in the editor. For example, you may create a new post and
+                there you will see it, ready to be used!</p>
+            <p>Click the "+" symbol to add a block and either browse the gallery or just type the name of the block,
+                which in this case is <i>"My custom block"</i>.</p>
+            <figure>
+                <img src="./images/see-custom-block.png" alt="See custom block" width="362" height="298" loading="lazy">
+            </figure>
+            <p>When you add it to the page, you will see the block in action.</p>
+        </section>
+        <section id="customize">
+            <h3>Step 3: Customize the block to suit your needs!</h3>
+            <p>Now all you need to do is customize this block to make something amazing with it. And to do so, you have
+                to understand its structure.</p>
+            <p>Let's start by looking at the contents of the plugin folder:</p>
+            <figure>
+                <img src="./images/block-plugin-structure.png" alt="Block Plugin Structure" width="441" height="391"
+                     loading="lazy">
+            </figure>
+            <p>There you go!</p>
+        </section>
+    </article>
+</main>
+<footer>
+    <p>By <a href="https://alvarofranz.com">Alvaro Franz</a></p>
+</footer>
+</body>
+</html>
